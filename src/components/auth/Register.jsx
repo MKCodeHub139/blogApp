@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { account, ID } from '../../lib/appwrite'
 
+
 const Register = () => {
     const [name,setName] =useState('')
     const [email,setEmail] =useState('')
@@ -16,6 +17,7 @@ const Register = () => {
             console.log(error)
         }
     }
+
   return (
      <div className="w-[100vw] flex flex-col p-9">
       <h2 className="text-4xl">Register</h2>
@@ -62,7 +64,7 @@ const Register = () => {
         </button>
         <label htmlFor="" className="text-red-600">
           Already have an account?
-          <Link to="/" className="underline cursor-pointer">
+          <Link to="/login" className="underline cursor-pointer">
             Login
           </Link>
         </label>

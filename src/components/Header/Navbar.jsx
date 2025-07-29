@@ -30,7 +30,7 @@ const Navbar = () => {
         <li><a>Item 3</a></li>
       </ul>
     </div>
-    <h2 className='text-2xl'><Link to={'/dashboard'}>Think<span className='text-blue-600'>Post</span> </Link> </h2>
+    <h2 className='text-2xl'><Link to={'/'}>Think<span className='text-[#6a8ca3]'>Post</span> </Link> </h2>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -50,15 +50,14 @@ const Navbar = () => {
   <div className="navbar-end">
     {
         user ?(
-            <div className='flex gap-3'>
+            <div className='flex gap-3 items-center'>
             <p className='font-bold'>Logged in as {user}</p>
-                <button className='border-1 px-9'><Link to='/logout'>Logout</Link> </button>
+                <button className='border-1 px-9 btn'><Link to='/logout'>Logout</Link> </button>
             </div>
         ):(
-            <div className='flex gap-9'>
-
-                <Link to='/'>Login</Link> 
-                <Link to='/register'>Register</Link> 
+            <div className='flex gap-3'>
+                <Link to='/login' className='btn'>Login</Link> 
+                <Link to='/register' className='btn'>Register</Link> 
             </div>
 
         )

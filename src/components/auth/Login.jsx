@@ -8,7 +8,7 @@ const Login = () => {
     const navigate =useNavigate()
     const login =async (e)=>{
         e.preventDefault()
-        account.createEmailPasswordSession(email,password).then(()=>alert('login successful')).then(()=>navigate('/dashboard'))
+        account.createEmailPasswordSession(email,password).then(()=>alert('login successful')).then(()=>navigate('/'))
     }
   return (
  <div className="w-[100vw] flex flex-col p-9">

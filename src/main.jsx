@@ -12,7 +12,8 @@ import Logout from './components/auth/Logout.jsx'
 const router =createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App/>} path='/'>
-      <Route element={<Login/>} path=''/>
+      <Route element={<Home/>} path=''/>
+      <Route element={<Login/>} path='login'/>
       <Route element={<Register/>} path='/register'/>
       <Route element={<Home/>} path='/dashboard'/>
       <Route element={<AddBlog/>} path='/add-blog'/>
