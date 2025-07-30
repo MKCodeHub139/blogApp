@@ -9,7 +9,7 @@ const useLogin =()=>{
     const [user,setUser]=useState('')
     useEffect(()=>{
         account.get().then((user)=>{
-            setUser(user.name)
+            setUser(user)
             setIsLoading(false)
             setIsLogin(true)
         }).catch((error)=>{

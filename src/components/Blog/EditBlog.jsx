@@ -1,58 +1,25 @@
-import React,{useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import useLogin from '../hook/useLogin'
-import { databases, ID, storage } from '../../lib/appwrite'
 
-
-
-const AddBlog = () => {
-  const {isLoading,isLogin,navigate,user} =useLogin()
+const EditBlog = () => {
+   const {isLoading,isLogin,navigate,user} =useLogin()
   const [title,setTitle] =useState('')
   const [desc,setDesc] =useState('')
   const [file,setFile] =useState('')
   const [preview,setPreview]= useState('')
-  useEffect(()=>{
-    if(!isLoading && !isLogin){
-      navigate('/login')
-    }
-  },[isLoading,isLogin])
-  const handleImgChange =(e)=>{
-    const selectedFile =e.target.files[0]
-    setFile(selectedFile)
-    if(selectedFile){
-      const previewUrl =URL.createObjectURL(selectedFile)
-      setPreview(previewUrl)
-    }
+
+
+  const handleImgChange =()=>{
 
   }
-
-  const addBlog =async (e)=>{
-    e.preventDefault()
-   
-     const imgRes= await storage.createFile(
-      import.meta.env.VITE_Bucket_Id,
-      ID.unique(),
-      file
-      )
-     const img_id =imgRes.$id
-     console.log(img_id)
-    databases.createDocument(
-      import.meta.env.VITE_Database_Id,
-      import.meta.env.VITE_Collection_Id,
-      ID.unique(),
-      {
-        title:title,
-        desc:desc,
-        img_id:img_id,
-        user_id:user.$id,
-        posted_by:user.name
-      }
-    )
+  const editBlog =()=>{
+    
   }
   return (
-    <div className="bg-gray-100">
+      <div className="bg-gray-100">
       {user &&(
         <div className="w-full h-screen p-5 ">
-          <form action="" className='w-1/2 flex flex-col gap-3' onSubmit={addBlog}>
+          <form action="" className='w-1/2 flex flex-col gap-3' onSubmit={editBlog}>
             <label htmlFor="">
               Title
             </label>
@@ -74,4 +41,4 @@ const AddBlog = () => {
   )
 }
 
-export default AddBlog
+export default EditBlog
