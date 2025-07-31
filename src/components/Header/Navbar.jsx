@@ -1,25 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { account } from "../../lib/appwrite";
-import button from "daisyui/components/button";
 
 const Navbar = () => {
   const [user, setUser] = useState("");
-  account.get().then((user) => {
-    setUser(user.name);
-  });
+  useEffect(()=>{
+    account.get().then((user) => {
+      setUser(user.name);
+    })
+
+  },[user])
+
+  // add later
+  // const onSearch =()=>{
+    
+  // }
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
         <div className="flex-1">
-    <h2 className='text-2xl'><Link to={'/'}>Think<span className='text-[#6a8ca3]'>Post</span> </Link> </h2>
+    <h2 className='text-2xl'><Link to={'/'}>Stack<span className='text-[#6a8ca3]'>Write</span> </Link> </h2>
         </div>
         <div className="flex gap-2">
-          <input
+          {/* add later
+           <input
+          onChange={onSearch}
             type="text"
             placeholder="Search"
             className="input input-bordered w-24 md:w-auto"
-          />
+          /> */}
 
           {user ? (
             <div>

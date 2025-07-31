@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { databases, storage } from "../../lib/appwrite";
 import { Link } from "react-router-dom";
 import useLogin from "../hook/useLogin";
+import filter from "daisyui/components/filter";
 
 const MyBlogs = () => {
   const { user, isLoading, isLogin, navigate } = useLogin();
-  const [blogData, setBlogData] = useState({});
+  const [blogData, setBlogData] = useState([]);
 
   //   if (!isLoading && !isLogin) {
   //     navigate("/");
   //   }
-
   useEffect(() => {
     databases
       .listDocuments(
@@ -18,19 +18,22 @@ const MyBlogs = () => {
         import.meta.env.VITE_Collection_Id
       )
       .then((data) => {
-        setBlogData(data);
+
+        if(user.$id){
+          const filterData =data?.documents?.filter((item)=>item.user_id ===user.$id)
+          setBlogData(filterData);
+        }
       });
-  }, [blogData]);
+    }, [user]);
 
+    if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
   if (!user) return null;
-
   return (
     <div className="p-5">
         <h2 className="text-2xl font-bold">My blogs</h2>
       <div className="cards my-11 flex gap-9 flex-wrap justify-center w-full">
-        {blogData.documents? (
-          blogData.documents.map((item) => {
-            if (user.$id === item.user_id) {
+        {blogData.length >0? (
+          blogData.map((item) => {
               return (
                 <div
                   key={item.$id}
@@ -69,12 +72,13 @@ const MyBlogs = () => {
                   </figure>
                 </div>
               );
-              
-            }
+
+
           })
         ) 
+      
         : (
-          <div>no blog available</div>
+        <div><p className="text-[20px]">No blog posted yet !</p></div>
         )}
       </div>
     </div>

@@ -8,15 +8,17 @@ const useLogin =()=>{
     const [isLogin,setIsLogin] =useState(false)
     const [user,setUser]=useState('')
     useEffect(()=>{
-        account.get().then((user)=>{
+      const res=  account.get().then((user)=>{
             setUser(user)
             setIsLoading(false)
             setIsLogin(true)
         }).catch((error)=>{
             setIsLoading(false)
             setIsLogin(false)
-            alert('you are not logged in')
         })
+        if(!res){
+            alert('you are not logged in')
+        }
     },[])
     return {user,isLoading,isLogin,navigate}
 }

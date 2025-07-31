@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { account, ID } from '../../lib/appwrite'
+import useLogin from '../hook/useLogin'
 
 
 const Register = () => {
     const [name,setName] =useState('')
     const [email,setEmail] =useState('')
     const [password,setPassword] =useState('')
+    const {isLoading} =useLogin()
     const register =async(e)=>{
         e.preventDefault()
         try {
@@ -17,13 +19,13 @@ const Register = () => {
             console.log(error)
         }
     }
-
+    if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
   return (
-     <div className="w-[100vw] flex flex-col p-9">
+     <div className="flex flex-col p-9">
       <h2 className="text-4xl">Register</h2>
       <form
         action=""
-        className="flex flex-col justify-center w-1/2 gap-2 mt-9"
+        className="flex flex-col justify-center md:w-1/2 gap-2 mt-9"
         onSubmit={register}
       >
         <label htmlFor="">Name</label>

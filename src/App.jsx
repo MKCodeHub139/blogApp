@@ -7,7 +7,10 @@ function App() {
   return (
     <>
     <Navbar/>
+    <div className='min-h-[100vh] bg-gray-100'>
+
       <Outlet/>
+    </div>
       <Footer/>
     </>
   )

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { account, databases, storage } from "../../lib/appwrite";
 import useLogin from "../hook/useLogin";
 const Home = () => {
+  const {isLoading} =useLogin()
   const [blogData, setBlogData] = useState({});
   
   useEffect(() => {
@@ -17,7 +18,7 @@ const Home = () => {
       }, [blogData]);
    
 
-
+  if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
   return (
     <div className="w-full px-3">
       <div className="flex md:flex-row flex-col px-11 items-center bg-[url('https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] w-full h-[40vh] bg-cover bg-center">
@@ -34,21 +35,26 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <div className="main mt-11">
+      <div className="main pt-11 bg-gray-100">
         <div className="heading">
           <h2 className="text-4xl mt-11 text-center">Blogs</h2>
           <hr className="mt-9" />
         </div>
 
-        <div className="cards my-11 flex gap-9 flex-wrap justify-center w-full">
+        <div className="cards py-11 flex gap-9 flex-wrap justify-center w-full ">
+          {blogData.documents.length ===0 &&(
+            <div>No Blog Available !</div>
+          )
+          }
           {blogData.documents ? (
             blogData.documents.map((item) => {
               return (
+               
                 <div
                   key={item.$id}
                   className="card bg-base-100  shadow-lg lg:w-1/4 w-full md:w-1/3 sm:w-1/2"
                 >
-                  <div className="card-body">
+                  <div className="card-body flex gap-7">
                     <h2 className="card-title">Title : {item.title}</h2>
                     <p><b>Description : </b>
                       {(() => {
