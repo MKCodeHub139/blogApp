@@ -8,9 +8,9 @@ const MyBlogs = () => {
   const { user, isLoading, isLogin, navigate } = useLogin();
   const [blogData, setBlogData] = useState([]);
 
-  //   if (!isLoading && !isLogin) {
-  //     navigate("/");
-  //   }
+  if(!isLoading && !isLogin){
+    navigate('/login')
+  }
   useEffect(() => {
     databases
       .listDocuments(
@@ -40,7 +40,19 @@ const MyBlogs = () => {
                   className="card bg-base-100  shadow-lg lg:w-1/4 w-full md:w-1/3 sm:w-1/2"
                 >
                   <div className="card-body">
-                    <h2 className="card-title">Title : {item.title}</h2>
+                    <h2 className="card-title">Title : {(()=>{
+                      const words =item.title.split(" ")
+                      return words?.length > 10 ? words.slice(0,10).join(" ") + " . . ." :item.title
+                    })()}</h2>
+                  <figure>
+                    <img
+                      src={storage.getFileView(
+                        import.meta.env.VITE_Bucket_Id,
+                        item.img_id
+                      )}
+                      alt="Shoes"
+                    />
+                  </figure>
                     <p>
                       <b>Description : </b>
                       {(() => {
@@ -61,15 +73,6 @@ const MyBlogs = () => {
                     </p>
                   </div>
 
-                  <figure>
-                    <img
-                      src={storage.getFileView(
-                        import.meta.env.VITE_Bucket_Id,
-                        item.img_id
-                      )}
-                      alt="Shoes"
-                    />
-                  </figure>
                 </div>
               );
 

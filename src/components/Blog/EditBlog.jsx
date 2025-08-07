@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { databases, ID, storage } from '../../lib/appwrite'
 
 const EditBlog = () => {
+  console.log('hello')
    const {isLoading,isLogin,navigate,user} =useLogin()
    const [searchParam] =useSearchParams()
    const editId = searchParam.get('edit-id')
@@ -22,7 +23,7 @@ const EditBlog = () => {
                setTitle(data.title)
                setDesc(data.desc)
                setImg_id(data.img_id)
-              }).then(()=>alert('Update blog successfully')).then(()=>navigate('/blog'))
+              })
     }
    },[])
    
@@ -37,7 +38,7 @@ const EditBlog = () => {
   }
   const editBlog =async(e)=>{
     e.preventDefault()
-    let editImgId;
+    let editImgId =img_id;
     if(file){
 
       const imgRes = await storage.createFile(
@@ -66,6 +67,8 @@ const EditBlog = () => {
       img_id
     )
     alert ('updated data successfully')
+    navigate(`/blog?id=${editId}`)
+
   }
       if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
 
@@ -77,17 +80,16 @@ const EditBlog = () => {
             <label htmlFor="">
               Title
             </label>
-            <input type="text" name="" id="" placeholder='Enter title' value={title} onChange={(e)=>setTitle(e.target.value)} className='px-2 border-1 rounded-xl py-1'/>
+            <input type="text" name="" id="" placeholder='Enter title' value={title} onChange={(e)=>setTitle(e.target.value)} className='px-2 border-1 rounded-xl py-1' required/>
             <label htmlFor="">
               Description
             </label>
-            <textarea name="" id="" rows={4} placeholder='Enter description' value={desc} onChange={(e)=>setDesc(e.target.value)} className='px-2 border-1 rounded-xl py-1'></textarea>
+            <textarea name="" id="" rows={4} placeholder='Enter description' value={desc} onChange={(e)=>setDesc(e.target.value)} className='px-2 border-1 rounded-xl py-1'required></textarea>
             <div className="img">
             {preview ? (<img src={preview} width={100} alt="" />):(<img src={storage.getFileView(import.meta.env.VITE_Bucket_Id,img_id)} width={100} />)}
-            <label htmlFor="">Choose Image : </label>
-            <input type="file" className='border-1 px-2 cursor-pointer' onChange={handleImgChange}/>
+            <input type="file" className='border-1 px-2 cursor-pointer mt-3' onChange={handleImgChange} />
             </div>
-            <button type='submit' className='w-2/4 bg-[#6a8ca3] py-2 mt-3 rounded-2xl text-white cursor-pointer hover:bg-sky-950'>Add blog</button>
+            <button type='submit' className='w-2/4 bg-[#6a8ca3] py-2 mt-3 rounded-2xl text-white cursor-pointer hover:bg-sky-950'>Update blog</button>
           </form>
         </div>
       )}

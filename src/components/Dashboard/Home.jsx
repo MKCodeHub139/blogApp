@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { account, databases, storage } from "../../lib/appwrite";
-import useLogin from "../hook/useLogin";
+import { Link } from "react-router-dom";
+import { databases, storage } from "../../lib/appwrite";
+import useLogin from "../hook/useLogin";  
 const Home = () => {
   const {isLoading} =useLogin()
   const [blogData, setBlogData] = useState({});
@@ -42,7 +42,7 @@ const Home = () => {
         </div>
 
         <div className="cards py-11 flex gap-9 flex-wrap justify-center w-full ">
-          {blogData.documents.length ===0 &&(
+          {blogData.documents?.length ===0 &&(
             <div>No Blog Available !</div>
           )
           }
@@ -55,12 +55,24 @@ const Home = () => {
                   className="card bg-base-100  shadow-lg lg:w-1/4 w-full md:w-1/3 sm:w-1/2"
                 >
                   <div className="card-body flex gap-7">
-                    <h2 className="card-title">Title : {item.title}</h2>
+                    <h2 className="card-title">Title : {(()=>{
+                      const words =item.title.split(" ")
+                      return words?.length > 10 ? words.slice(0,10).join(" ") +" . . . ":item.title
+                    })()}</h2>
+                  <figure>
+                    <img
+                      src={storage.getFileView(
+                        import.meta.env.VITE_Bucket_Id,
+                        item.img_id
+                      )}
+                      alt="Shoes"  height={200}
+                    />
+                  </figure>                  
                     <p><b>Description : </b>
                       {(() => {
                         const words = item.desc.split(" ");
-                        return words.length > 30
-                          ? words.slice(0, 30).join(" ") + "..."
+                        return words?.length > 25
+                          ? words.slice(0, 25).join(" ") + " . . ."
                           : item.desc;
                       })()} <Link to={`/blog?id=${item.$id}`} className="underline text-red-600 cursor-pointer">read more</Link>
                     </p>
@@ -68,15 +80,6 @@ const Home = () => {
                   </div>
                 
 
-                  <figure>
-                    <img
-                      src={storage.getFileView(
-                        import.meta.env.VITE_Bucket_Id,
-                        item.img_id
-                      )}
-                      alt="Shoes"
-                    />
-                  </figure>                  
                 </div>
               );
             })

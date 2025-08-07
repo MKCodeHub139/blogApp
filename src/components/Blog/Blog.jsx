@@ -10,7 +10,6 @@ const Blog = () => {
   const id = searchParam.get("id");
   const [data, setData] = useState({});
   const {isLoading} =useLogin()
-
   useEffect(() => {
     databases
       .getDocument(
@@ -52,18 +51,18 @@ const Blog = () => {
           </Link>
         </div>
       )}
-      <div className="blog-card md:w-full md:flex rounded-xl overflow-hidden shadow-xl">
+      <div className="blog-card md:w-full md:flex rounded-xl overflow-hidden shadow-xl p-7 bg-white">
         <div className="img md:w-[50%] w-[100%] h-[80vh] ">
           <img
             src={
               data.img_id &&
               storage.getFileView(import.meta.env.VITE_Bucket_Id, data.img_id)
             }
-            className="w-[100%] h-[100%] object-center object-cover "
+            className="w-[100%] h-[100%] object-center object-cover rounded"
             alt=""
           />
         </div>
-        <div className="body md:w-[50%] w:[100%] flex flex-col gap-9  p-5 bg-white">
+        <div className="body md:w-[50%] w:[100%] flex flex-col gap-9  p-5 ">
           <div className="title text-3xl">
             <h2>{data.title}</h2>
           </div>

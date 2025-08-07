@@ -30,6 +30,7 @@ const Login = () => {
           className="border-1 px-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <label htmlFor="">password</label>
         <input
@@ -40,6 +41,7 @@ const Login = () => {
           className="border-1 px-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button
           type="submit"

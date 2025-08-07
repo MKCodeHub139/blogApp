@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { account, ID } from '../../lib/appwrite'
 import useLogin from '../hook/useLogin'
 
@@ -8,13 +8,20 @@ const Register = () => {
     const [name,setName] =useState('')
     const [email,setEmail] =useState('')
     const [password,setPassword] =useState('')
-    const {isLoading} =useLogin()
+    const {isLoading,navigate} =useLogin()
     const register =async(e)=>{
         e.preventDefault()
         try {
             
             await account.create(ID.unique(),email,password,name)
             alert('account created successfully')
+
+            setEmail('')
+            setName('')
+            setPassword('')
+
+           await account.createEmailPasswordSession(email,password)
+           navigate('/')
         } catch (error) {
             console.log(error)
         }
@@ -37,6 +44,7 @@ const Register = () => {
           className="border-1 px-2"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
         <label htmlFor="">email</label>
         <input
@@ -47,6 +55,7 @@ const Register = () => {
           className="border-1 px-2"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <label htmlFor="">password</label>
         <input
@@ -57,10 +66,11 @@ const Register = () => {
           className="border-1 px-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button
           type="submit"
-          className="bg-gray-500 text-white hover:bg-gray-400 py-1 mt-3 px-3 w-[200px]"
+          className="bg-gray-500 text-white hover:bg-gray-400 py-1 mt-3 px-3 w-[200px] cursor-pointer"
         >
           Register
         </button>

@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { account } from "../../lib/appwrite";
+import useLogin from "../hook/useLogin";
 
 const Navbar = () => {
-  const [user, setUser] = useState("");
-  useEffect(()=>{
-    account.get().then((user) => {
-      setUser(user.name);
-    })
+  const {user} =useLogin()
 
-  },[user])
-
-  // add later
-  // const onSearch =()=>{
-    
-  // }
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -44,7 +33,7 @@ const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    src="/profile.png"
                   />
                 </div>
               </div>
@@ -53,7 +42,7 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <p className="font-bold">{user}</p>
+                  <p className="font-bold">{user.name}</p>
                 </li>
                 <li>
                   <a className="justify-between">Profile</a>
@@ -119,9 +108,9 @@ const Navbar = () => {
   </div>
   <div className="navbar-end">
     {
-        user ?(
+        checkUser ?(
             <div className='flex gap-3 items-center'>
-            <p className='font-bold'>Logged in as {user}</p>
+            <p className='font-bold'>Logged in as {checkUser}</p>
                 <button className='border-1 px-9 btn'><Link to='/logout'>Logout</Link> </button>
             </div>
         ):(

@@ -47,6 +47,7 @@ const AddBlog = () => {
     setTitle('')
     setDesc('')
     setFile('')
+    setPreview('')
     alert('Add blog successfully')
   };
   if (isLoading || isLoading == true)
@@ -58,7 +59,7 @@ const AddBlog = () => {
         <div className="w-full h-screen p-5 ">
           <form
             action=""
-            className="w-1/2 flex flex-col gap-3"
+            className="md:w-1/2 flex flex-col gap-3"
             onSubmit={addBlog}
           >
             <label htmlFor="">Title</label>
@@ -70,6 +71,7 @@ const AddBlog = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="px-2 border-1 rounded-xl py-1"
+              required
             />
             <label htmlFor="">Description</label>
             <textarea
@@ -80,14 +82,15 @@ const AddBlog = () => {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               className="px-2 border-1 rounded-xl py-1"
+              required
             ></textarea>
             <div className="img">
               {preview && <img src={preview} width={100} alt="" />}
-              <label htmlFor="">Choose Image : </label>
               <input
                 type="file"
-                className="border-1 px-2 cursor-pointer"
+                className="border-1 px-2 cursor-pointer mt-3"
                 onChange={handleImgChange}
+                required
               />
             </div>
             <button
