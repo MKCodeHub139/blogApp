@@ -25,7 +25,7 @@ const EditBlog = () => {
                setImg_id(data.img_id)
               })
     }
-   },[])
+   },[editId])
    
 
   const handleImgChange =(e)=>{
@@ -47,7 +47,7 @@ const EditBlog = () => {
          file,
       )
       editImgId =imgRes.$id
-    }
+    
     await databases.updateDocument(
       import.meta.env.VITE_Database_Id,
       import.meta.env.VITE_Collection_Id,
@@ -68,7 +68,7 @@ const EditBlog = () => {
     )
     alert ('updated data successfully')
     navigate(`/blog?id=${editId}`)
-
+  }
   }
       if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
 

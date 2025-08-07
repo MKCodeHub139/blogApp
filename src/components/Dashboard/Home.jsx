@@ -15,7 +15,7 @@ const Home = () => {
         .then((data) => {
           setBlogData(data);
        });
-      }, [blogData]);
+      }, []);
    
 
   if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
@@ -56,7 +56,7 @@ const Home = () => {
                 >
                   <div className="card-body flex gap-7">
                     <h2 className="card-title">Title : {(()=>{
-                      const words =item.title.split(" ")
+                      const words =item.title.split(" ") || []
                       return words?.length > 10 ? words.slice(0,10).join(" ") +" . . . ":item.title
                     })()}</h2>
                   <figure>
@@ -65,7 +65,7 @@ const Home = () => {
                         import.meta.env.VITE_Bucket_Id,
                         item.img_id
                       )}
-                      alt="Shoes"  height={200}
+                      alt="Shoes"
                     />
                   </figure>                  
                     <p><b>Description : </b>
