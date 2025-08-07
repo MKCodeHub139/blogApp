@@ -9,7 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from "./components/auth/Login.jsx";
-import Register from "./components/auth/register.jsx";
+import Register from "./components/auth/Register.jsx";
 import Home from "./components/Dashboard/Home.jsx";
 import AddBlog from "./components/Blog/AddBlog.jsx";
 import Logout from "./components/auth/Logout.jsx";
