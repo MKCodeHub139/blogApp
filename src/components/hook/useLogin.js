@@ -16,9 +16,6 @@ const useLogin =()=>{
             setIsLoading(false)
             setIsLogin(false)
         })
-        if(!res){
-            alert('you are not logged in')
-        }
     },[])
     return {user,isLoading,isLogin,navigate}
 }

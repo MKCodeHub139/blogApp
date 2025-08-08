@@ -49,6 +49,7 @@ const AddBlog = () => {
     setFile('')
     setPreview('')
     alert('Add blog successfully')
+    navigate('/my-blogs')
   };
   if (isLoading || isLoading == true)
     return <div className="text-xl m-5">Loading...</div>;

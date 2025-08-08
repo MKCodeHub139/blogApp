@@ -5,12 +5,12 @@ import useLogin from "../hook/useLogin";
 import { Link } from "react-router-dom";
 
 const Blog = () => {
-  const { user,navigate} = useLogin();
+  const { user, navigate, isLoading } = useLogin();
   const [searchParam] = useSearchParams();
   const id = searchParam.get("id");
   const [data, setData] = useState({});
-  const {isLoading} =useLogin()
   useEffect(() => {
+    if (!id) return;
     databases
       .getDocument(
         import.meta.env.VITE_Database_Id,
@@ -18,8 +18,9 @@ const Blog = () => {
         id
       )
       .then((data) => setData(data));
-  }, []);
-     if(isLoading || isLoading ==true) return <div className="text-xl m-5">Loading...</div>
+  }, [id]);
+  if (isLoading || isLoading == true)
+    return <div className="text-xl m-5">Loading...</div>;
   return (
     <div className="px-5 py-5">
       {user && data.user_id === user.$id && (
@@ -33,19 +34,23 @@ const Blog = () => {
           <Link
             className="px-7 py-1 rounded-md cursor-pointer bg-red-600 hover:bg-red-500"
             onClick={async () => {
-              await databases.deleteDocument(
-                import.meta.env.VITE_Database_Id,
-                import.meta.env.VITE_Collection_Id,
-                id
-              );
-              await storage.deleteFile(
-             import.meta.env.VITE_Bucket_Id,
-                data.img_id
-              )
-              alert('delete blog Successfully')
-              navigate('/')
-            }
-        }
+              try {
+                await databases.deleteDocument(
+                  import.meta.env.VITE_Database_Id,
+                  import.meta.env.VITE_Collection_Id,
+                  id
+                );
+                await storage.deleteFile(
+                  import.meta.env.VITE_Bucket_Id,
+                  data.img_id
+                );
+                alert("delete blog Successfully");
+                navigate("/");
+              } catch (error) {
+                console.error("Failed to delete:", err);
+                alert("Error deleting blog");
+              }
+            }}
           >
             delete
           </Link>
@@ -55,8 +60,12 @@ const Blog = () => {
         <div className="img md:w-[50%] w-[100%] h-[80vh] ">
           <img
             src={
-              data.img_id &&
-              storage.getFileView(import.meta.env.VITE_Bucket_Id, data.img_id)
+              data.img_id
+                ? storage.getFileView(
+                    import.meta.env.VITE_Bucket_Id,
+                    data.img_id
+                  )
+                : "https://via.placeholder.com/600x400?text=No+Image"
             }
             className="w-[100%] h-[100%] object-center object-cover rounded"
             alt=""
